@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.ClientMonCompteController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox stylesheets="@../css/style.css"
+          spacing="20"
+          alignment="CENTER"
+          style="-fx-background-color: #f8f9fa;">
+
+        <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
+
+        <Label text="👤 Mon compte"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #5c6bc0;"/>
+
+        <!-- CARTE INFOS PERSONNELLES -->
+        <VBox styleClass="card" spacing="15" maxWidth="500">
+            <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+            <Label text="Informations personnelles"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+
+            <VBox spacing="5">
+                <Label text="Nom complet *" styleClass="form-label"/>
+                <TextField fx:id="nomField" styleClass="text-field"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Email *" styleClass="form-label"/>
+                <TextField fx:id="emailField" styleClass="text-field"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Téléphone" styleClass="form-label"/>
+                <TextField fx:id="telephoneField" styleClass="text-field"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Adresse" styleClass="form-label"/>
+                <TextField fx:id="adresseField" styleClass="text-field"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Date de naissance" styleClass="form-label"/>
+                <DatePicker fx:id="dateNaissancePicker" styleClass="text-field"/>
+            </VBox>
+        </VBox>
+
+        <!-- CARTE MOT DE PASSE -->
+        <VBox styleClass="card" spacing="15" maxWidth="500">
+            <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+            <Label text="Changer le mot de passe"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+
+            <VBox spacing="5">
+                <Label text="Mot de passe actuel" styleClass="form-label"/>
+                <PasswordField fx:id="ancienPasswordField" styleClass="text-field"
+                               promptText="Laissez vide si inchangé"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Nouveau mot de passe" styleClass="form-label"/>
+                <PasswordField fx:id="nouveauPasswordField" styleClass="text-field"
+                               promptText="Minimum 6 caractères"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Confirmer le nouveau mot de passe" styleClass="form-label"/>
+                <PasswordField fx:id="confirmPasswordField" styleClass="text-field"/>
+            </VBox>
+        </VBox>
+
+        <!-- MESSAGE ERREUR / SUCCÈS -->
+        <Label fx:id="messageLabel" text="" visible="false"
+               style="-fx-font-size: 13px;" wrapText="true" maxWidth="500"/>
+
+        <!-- BOUTONS -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="💾 Sauvegarder les modifications" styleClass="btn-add"
+                    onAction="#handleSauvegarder"/>
+            <Button text="Annuler" styleClass="btn-secondary"
+                    onAction="#handleAnnuler"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

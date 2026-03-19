@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.ClientFormController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox
+          stylesheets="@../css/style.css"
+          spacing="15" styleClass="content-area"
+          prefWidth="600">
+
+        <padding><Insets top="25" right="30" bottom="25" left="30"/></padding>
+
+        <!-- TITRE -->
+        <Label fx:id="titreFormLabel" text="Ajouter un client" styleClass="page-title"/>
+
+        <!-- FORMULAIRE -->
+        <VBox spacing="12">
+
+            <!-- Nom -->
+            <VBox spacing="5">
+                <Label text="Nom *" styleClass="form-label"/>
+                <TextField fx:id="nomField" promptText="Nom complet" styleClass="text-field"/>
+            </VBox>
+
+            <!-- Email -->
+            <VBox spacing="5">
+                <Label text="Email *" styleClass="form-label"/>
+                <TextField fx:id="emailField" promptText="exemple@email.com" styleClass="text-field"/>
+            </VBox>
+
+            <!-- Téléphone -->
+            <VBox spacing="5">
+                <Label text="Téléphone" styleClass="form-label"/>
+                <TextField fx:id="telephoneField" promptText="0612345678" styleClass="text-field"/>
+            </VBox>
+
+            <!-- Adresse -->
+            <VBox spacing="5">
+                <Label text="Adresse" styleClass="form-label"/>
+                <TextField fx:id="adresseField" promptText="Ex : 2 rue du Cinéma, 75010 Paris" styleClass="text-field"/>
+            </VBox>
+
+            <!-- Date de naissance -->
+            <VBox spacing="5">
+                <Label text="Date de naissance" styleClass="form-label"/>
+                <DatePicker fx:id="dateNaissancePicker" styleClass="text-field"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- MESSAGE ERREUR -->
+        <Label fx:id="errorLabel" styleClass="login-error" text="" visible="false"/>
+
+        <!-- BOUTONS -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Annuler" styleClass="btn-secondary" onAction="#handleAnnuler"/>
+            <Button text="Sauvegarder" styleClass="btn-add" onAction="#handleSauvegarder"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

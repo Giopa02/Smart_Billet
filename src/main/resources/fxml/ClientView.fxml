@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.ClientController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox
+          stylesheets="@../css/style.css"
+          spacing="15" styleClass="content-area">
+
+        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+        <!-- TITRE + BOUTON AJOUTER -->
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="👤 Gestion des Clients" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+            <Button text="+ Ajouter" styleClass="btn-add" onAction="#handleAjouter"/>
+        </HBox>
+
+        <!-- BARRE DE RECHERCHE + FILTRES -->
+        <VBox spacing="8">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField"
+                           promptText="🔍 Rechercher un client..."
+                           styleClass="text-field"
+                           prefWidth="300"
+                           onKeyReleased="#handleRecherche"/>
+                <Button text="🔄 Réinitialiser" styleClass="btn-secondary" onAction="#handleReinitialiser"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="filtreVille"
+                           promptText="Ville / adresse"
+                           styleClass="text-field"
+                           prefWidth="200"
+                           onKeyReleased="#handleFiltrer"/>
+                <TextField fx:id="filtreAgeMin"
+                           promptText="Âge min"
+                           styleClass="text-field"
+                           prefWidth="100"
+                           onKeyReleased="#handleFiltrer"/>
+                <TextField fx:id="filtreAgeMax"
+                           promptText="Âge max"
+                           styleClass="text-field"
+                           prefWidth="100"
+                           onKeyReleased="#handleFiltrer"/>
+            </HBox>
+        </VBox>
+
+        <!-- TABLEAU -->
+        <TableView fx:id="tableClients" VBox.vgrow="ALWAYS" styleClass="table-view" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colNom" text="Nom" prefWidth="150"/>
+                <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
+                <TableColumn fx:id="colTelephone" text="Téléphone" prefWidth="120"/>
+                <TableColumn fx:id="colAdresse" text="Adresse" prefWidth="200"/>
+                <TableColumn fx:id="colDateNaissance" text="Date naissance" prefWidth="120"/>
+            </columns>
+            <placeholder>
+                <Label text="Aucun client trouvé"/>
+            </placeholder>
+        </TableView>
+
+        <!-- BOUTONS -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="✏️ Modifier" styleClass="btn-edit" onAction="#handleModifier"/>
+            <Button text="🎫 Voir billets" styleClass="btn-secondary" onAction="#handleVoirBillets"/>
+            <Button text="🗑️ Supprimer" styleClass="btn-delete" onAction="#handleSupprimer"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

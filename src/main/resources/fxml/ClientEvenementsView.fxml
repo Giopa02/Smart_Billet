@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.ClientEvenementsController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox stylesheets="@../css/style.css"
+          spacing="20"
+          style="-fx-background-color: #f8f9fa;">
+
+        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+        <!-- TITRE + RECHERCHE -->
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="🎭 Événements à venir"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #5c6bc0;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="searchField"
+                       promptText="🔍 Rechercher..."
+                       styleClass="text-field"
+                       prefWidth="250"
+                       onKeyReleased="#handleRecherche"/>
+            <ComboBox fx:id="filtreCategorie"
+                      promptText="Catégorie"
+                      styleClass="text-field"
+                      prefWidth="160"
+                      onAction="#handleFiltrer"/>
+            <Button text="🔄" styleClass="btn-secondary" onAction="#handleReinitialiser"/>
+        </HBox>
+
+        <!-- GRILLE DE CARDS -->
+        <FlowPane fx:id="cardsContainer"
+                  hgap="20" vgap="20"
+                  prefWrapLength="900"/>
+
+    </VBox>
+
+</ScrollPane>

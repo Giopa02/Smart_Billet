@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.SalleController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox stylesheets="@../css/style.css" spacing="15" styleClass="content-area">
+        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+        <!-- TITRE -->
+        <Label text="🏛️ Gestion des Salles" styleClass="page-title"/>
+
+        <!-- BARRE DE RECHERCHE + BOUTON AJOUTER -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="🔍 Rechercher une salle..."
+                       styleClass="text-field" prefWidth="300"
+                       onKeyReleased="#handleRecherche"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="➕ Ajouter une salle" styleClass="btn-add" onAction="#handleAjouter"/>
+        </HBox>
+
+        <!-- TABLEAU -->
+        <TableView fx:id="tableSalles" prefHeight="500" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colNom" text="Nom" prefWidth="200"/>
+                <TableColumn fx:id="colCapacite" text="Capacité" prefWidth="100"/>
+                <TableColumn fx:id="colComplexe" text="Complexe" prefWidth="200"/>
+            </columns>
+            <placeholder>
+                <Label text="Aucune salle trouvée."/>
+            </placeholder>
+        </TableView>
+
+        <!-- BOUTONS ACTION -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="✏️ Modifier" styleClass="btn-edit" onAction="#handleModifier"/>
+            <Button text="🗑️ Supprimer" styleClass="btn-delete" onAction="#handleSupprimer"/>
+        </HBox>
+
+        <!-- MESSAGE SUCCÈS -->
+        <Label fx:id="successLabel" text="" visible="false"
+               style="-fx-text-fill: #4caf50; -fx-font-size: 13px;"/>
+
+    </VBox>
+
+</ScrollPane>

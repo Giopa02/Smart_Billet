@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.EvenementController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox
+          stylesheets="@../css/style.css"
+          spacing="15" styleClass="content-area">
+
+        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+        <!-- TITRE + BOUTON AJOUTER -->
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="📅 Gestion des Événements" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+            <Button text="+ Ajouter" styleClass="btn-add" onAction="#handleAjouter"/>
+        </HBox>
+
+        <!-- BARRE DE RECHERCHE + FILTRES -->
+        <VBox spacing="8">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField"
+                           promptText="🔍 Rechercher un événement..."
+                           styleClass="text-field"
+                           prefWidth="300"
+                           onKeyReleased="#handleRecherche"/>
+                <Button text="🔄 Réinitialiser" styleClass="btn-secondary" onAction="#handleReinitialiser"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ComboBox fx:id="filtreCategorie"
+                          promptText="Catégorie"
+                          styleClass="text-field"
+                          prefWidth="180"
+                          onAction="#handleFiltrer"/>
+                <TextField fx:id="filtrePrixMin"
+                           promptText="Prix min (€)"
+                           styleClass="text-field"
+                           prefWidth="120"
+                           onKeyReleased="#handleFiltrer"/>
+                <TextField fx:id="filtrePrixMax"
+                           promptText="Prix max (€)"
+                           styleClass="text-field"
+                           prefWidth="120"
+                           onKeyReleased="#handleFiltrer"/>
+                <TextField fx:id="filtreAgeMin"
+                           promptText="Âge min"
+                           styleClass="text-field"
+                           prefWidth="100"
+                           onKeyReleased="#handleFiltrer"/>
+                <TextField fx:id="filtreAgeMax"
+                           promptText="Âge max"
+                           styleClass="text-field"
+                           prefWidth="100"
+                           onKeyReleased="#handleFiltrer"/>
+            </HBox>
+        </VBox>
+
+        <!-- TABLEAU -->
+        <TableView fx:id="tableEvenements" VBox.vgrow="ALWAYS" styleClass="table-view" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colTitre" text="Titre" prefWidth="200"/>
+                <TableColumn fx:id="colLangue" text="Langue" prefWidth="80"/>
+                <TableColumn fx:id="colDuree" text="Durée (min)" prefWidth="100"/>
+                <TableColumn fx:id="colAgeMin" text="Âge min" prefWidth="80"/>
+                <TableColumn fx:id="colPrix" text="Prix de base" prefWidth="100"/>
+                <TableColumn fx:id="colCategories" text="Catégories" prefWidth="200"/>
+            </columns>
+            <placeholder>
+                <Label text="Aucun événement trouvé"/>
+            </placeholder>
+        </TableView>
+
+        <!-- BOUTONS MODIFIER / SUPPRIMER -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="✏️ Modifier" styleClass="btn-edit" onAction="#handleModifier"/>
+            <Button text="🗑️ Supprimer" styleClass="btn-delete" onAction="#handleSupprimer"/>
+            <Button text="🖼️ Voir affiche" styleClass="btn-secondary" onAction="#handleVoirAffiche"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

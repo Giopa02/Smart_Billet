@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="org.example.controller.LoginController"
+           styleClass="gradient-bg"
+           stylesheets="@../css/style.css">
+
+    <VBox alignment="CENTER" spacing="20">
+
+        <!-- Card de connexion -->
+        <VBox styleClass="login-card" alignment="CENTER" spacing="18">
+
+            <Label text="🎟️ Smart Billet" styleClass="login-title"/>
+            <Label text="Connexion administrateur" style="-fx-text-fill: #888888; -fx-font-size: 14px;"/>
+
+            <!-- Email -->
+            <VBox spacing="6">
+                <Label text="Email" styleClass="login-label"/>
+                <TextField fx:id="emailField"
+                           styleClass="login-field"
+                           promptText="email"/>
+            </VBox>
+
+            <!-- Mot de passe -->
+            <VBox spacing="6">
+                <Label text="Mot de passe" styleClass="login-label"/>
+                <PasswordField fx:id="passwordField"
+                               styleClass="login-field"
+                               promptText="••••••••"/>
+            </VBox>
+
+            <!-- Message d'erreur -->
+            <Label fx:id="errorLabel" styleClass="login-error" text="" visible="false"/>
+
+            <!-- Bouton connexion -->
+            <Button text="Se connecter"
+                    styleClass="btn-login"
+                    onAction="#handleLogin"/>
+
+            <!-- Retour -->
+            <Button text="← Retour"
+                    styleClass="btn-secondary"
+                    onAction="#handleRetour"
+                    style="-fx-pref-width: 320px;"/>
+
+        </VBox>
+
+    </VBox>
+
+</StackPane>

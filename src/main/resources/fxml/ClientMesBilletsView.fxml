@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.ClientMesBilletsController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox stylesheets="@../css/style.css"
+          spacing="20"
+          style="-fx-background-color: #f8f9fa;">
+
+        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+        <!-- TITRE + STATS -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label text="🎫 Mes billets"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #5c6bc0;"/>
+            <Label fx:id="statsLabel"
+                   style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+        </HBox>
+
+        <!-- FILTRE STATUT -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Filtrer :" style="-fx-text-fill: #666666;"/>
+            <ComboBox fx:id="filtreStatut" promptText="Tous les statuts" prefWidth="180"
+                      onAction="#handleFiltrer"/>
+            <Button text="🔄 Réinitialiser" styleClass="btn-secondary" onAction="#handleReinitialiser"/>
+        </HBox>
+
+        <!-- CONTAINER BILLETS -->
+        <VBox fx:id="billetsContainer" spacing="12"/>
+
+    </VBox>
+
+</ScrollPane>

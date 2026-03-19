@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.SeanceFormController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox
+          stylesheets="@../css/style.css"
+          spacing="15" styleClass="content-area"
+          prefWidth="600">
+
+        <padding><Insets top="25" right="30" bottom="25" left="30"/></padding>
+
+        <!-- TITRE -->
+        <Label fx:id="titreFormLabel" text="Ajouter une séance" styleClass="page-title"/>
+
+        <VBox spacing="12">
+
+            <!-- Événement -->
+            <VBox spacing="5">
+                <Label text="Événement *" styleClass="form-label"/>
+                <ComboBox fx:id="evenementCombo" styleClass="text-field" prefWidth="400"/>
+            </VBox>
+
+            <!-- Salle -->
+            <VBox spacing="5">
+                <Label text="Salle *" styleClass="form-label"/>
+                <ComboBox fx:id="salleCombo" styleClass="text-field" prefWidth="400"/>
+            </VBox>
+
+            <!-- Date -->
+            <VBox spacing="5">
+                <Label text="Date *" styleClass="form-label"/>
+                <DatePicker fx:id="datePicker" styleClass="text-field"/>
+            </VBox>
+
+            <!-- Heure -->
+            <HBox spacing="20">
+                <VBox spacing="5">
+                    <Label text="Heure *" styleClass="form-label"/>
+                    <TextField fx:id="heureField" promptText="Ex: 20" styleClass="text-field" prefWidth="100"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Minutes *" styleClass="form-label"/>
+                    <TextField fx:id="minutesField" promptText="Ex: 00" styleClass="text-field" prefWidth="100"/>
+                </VBox>
+            </HBox>
+
+            <!-- Capacité salle -->
+            <VBox spacing="5">
+                <Label text="Capacité de la salle (places)" styleClass="form-label"/>
+                <TextField fx:id="capaciteField" promptText="Ex: 200" styleClass="text-field"/>
+                <Label text="Modifie la capacité de la salle sélectionnée"
+                       style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+            </VBox>
+
+            <!-- Prix -->
+            <VBox spacing="5">
+                <Label text="Prix (€) *" styleClass="form-label"/>
+                <TextField fx:id="prixField" promptText="Ex: 25.00" styleClass="text-field"/>
+            </VBox>
+
+
+
+        </VBox>
+
+        <!-- MESSAGE ERREUR -->
+        <Label fx:id="errorLabel" styleClass="login-error" text="" visible="false"/>
+
+        <!-- BOUTONS -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Annuler" styleClass="btn-secondary" onAction="#handleAnnuler"/>
+            <Button text="Sauvegarder" styleClass="btn-add" onAction="#handleSauvegarder"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

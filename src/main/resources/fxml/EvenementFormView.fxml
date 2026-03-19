@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.EvenementFormController"
+            fitToWidth="true"
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+    <VBox
+          stylesheets="@../css/style.css"
+          spacing="15" styleClass="content-area"
+          prefWidth="600">
+
+        <padding><Insets top="25" right="30" bottom="25" left="30"/></padding>
+
+        <!-- TITRE -->
+        <Label fx:id="titreFormLabel" text="Ajouter un événement" styleClass="page-title"/>
+
+        <!-- FORMULAIRE -->
+        <VBox spacing="12">
+
+            <!-- Titre -->
+            <VBox spacing="5">
+                <Label text="Titre *" styleClass="form-label"/>
+                <TextField fx:id="titreField" promptText="Nom de l'événement" styleClass="text-field"/>
+            </VBox>
+
+            <!-- Description courte -->
+            <VBox spacing="5">
+                <Label text="Description courte" styleClass="form-label"/>
+                <TextField fx:id="descriptionCourteField" promptText="Résumé en une phrase" styleClass="text-field"/>
+            </VBox>
+
+            <!-- Description longue -->
+            <VBox spacing="5">
+                <Label text="Description longue" styleClass="form-label"/>
+                <TextArea fx:id="descriptionLongueField"
+                          promptText="Description complète..."
+                          styleClass="text-field"
+                          prefHeight="80"
+                          wrapText="true"/>
+            </VBox>
+
+            <!-- Ligne : Durée + Âge min -->
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Durée (minutes)" styleClass="form-label"/>
+                    <TextField fx:id="dureeField" promptText="Ex: 120" styleClass="text-field"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Âge minimum" styleClass="form-label"/>
+                    <TextField fx:id="ageMinField" promptText="0 si aucun" styleClass="text-field"/>
+                </VBox>
+            </HBox>
+
+            <!-- Ligne : Langue + Prix -->
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Langue" styleClass="form-label"/>
+                    <TextField fx:id="langueField" promptText="Ex: Français" styleClass="text-field"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Prix de base (€)" styleClass="form-label"/>
+                    <TextField fx:id="prixField" promptText="Ex: 25.00" styleClass="text-field"/>
+                </VBox>
+            </HBox>
+
+            <!-- Affiche -->
+            <VBox spacing="5">
+                <Label text="Affiche" styleClass="form-label"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="afficheField" promptText="https://... ou chemin local" styleClass="text-field" HBox.hgrow="ALWAYS"/>
+                    <Button text="📁 Parcourir" styleClass="btn-secondary" onAction="#handleParcourirImage"/>
+                </HBox>
+                <Label fx:id="affichePreviewLabel" text="" style="-fx-text-fill: #4caf50; -fx-font-size: 11px;"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- Catégories -->
+        <VBox spacing="5">
+            <Label text="Catégories" styleClass="form-label"/>
+            <VBox fx:id="categoriesContainer"
+                  spacing="5"
+                  style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6;
+                     -fx-border-radius: 6px; -fx-background-radius: 6px;
+                     -fx-padding: 10px;">
+            </VBox>
+        </VBox>
+
+        <!-- MESSAGE ERREUR -->
+        <Label fx:id="errorLabel" styleClass="login-error" text="" visible="false"/>
+
+        <!-- BOUTONS -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Annuler" styleClass="btn-secondary" onAction="#handleAnnuler"/>
+            <Button fx:id="btnSauvegarder" text="Sauvegarder" styleClass="btn-add" onAction="#handleSauvegarder"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

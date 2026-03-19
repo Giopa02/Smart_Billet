@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="org.example.controller.SelectionController"
+           styleClass="gradient-bg"
+           stylesheets="@../css/style.css">
+
+    <VBox alignment="CENTER" spacing="30">
+        <padding><Insets top="60" bottom="40" left="80" right="80"/></padding>
+
+        <!-- Titre -->
+        <VBox alignment="CENTER" spacing="8">
+            <Label text="🎟️ SMART BILLET" styleClass="main-title"/>
+            <Label text="Bienvenue ! Choisissez votre espace :" styleClass="main-subtitle"/>
+        </VBox>
+
+        <!-- Séparateur -->
+        <Region styleClass="separator-line" prefHeight="1" maxWidth="600"/>
+
+        <!-- Card Espace Client -->
+        <VBox styleClass="card" alignment="CENTER" spacing="12" maxWidth="600" prefWidth="600">
+            <Label text="👤 ESPACE CLIENT" styleClass="card-title, card-title-client"/>
+            <Label text="Consulter les événements et acheter mes billets" styleClass="card-subtitle"/>
+            <Button text="Accéder à l'espace client"
+                    styleClass="btn-client"
+                    fx:id="btnClient"
+                    onAction="#handleClient"/>
+            <Label text="(En cours de développement)" styleClass="card-note"/>
+        </VBox>
+
+        <!-- Card Espace Administration -->
+        <VBox styleClass="card" alignment="CENTER" spacing="12" maxWidth="600" prefWidth="600">
+            <Label text="👩‍💼🧑‍💼 ESPACE ADMINISTRATION" styleClass="card-title, card-title-admin"/>
+            <Label text="Gérer les clients, événements et ventes" styleClass="card-subtitle"/>
+            <Button text="Accéder à l'administration"
+                    styleClass="btn-admin"
+                    fx:id="btnAdmin"
+                    onAction="#handleAdmin"/>
+        </VBox>
+
+        <!-- Footer -->
+        <Label text="Version 1.0 - BTS SIO SLAM 2025" styleClass="footer-text"/>
+
+    </VBox>
+</StackPane>

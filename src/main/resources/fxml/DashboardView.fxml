@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.DashboardController"
+            stylesheets="@../css/style.css">
+
+    <!-- SIDEBAR GAUCHE -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="220" spacing="5">
+            <padding><Insets top="20" bottom="20"/></padding>
+
+            <!-- Titre sidebar -->
+            <Label text="🎟️ Smart Billet" styleClass="sidebar-title"/>
+            <Label fx:id="adminNomLabel"
+                   text="Administrateur"
+                   style="-fx-text-fill: rgba(255,255,255,0.6); -fx-font-size: 12px; -fx-padding: 0 15px 15px 15px;"/>
+
+            <Separator style="-fx-background-color: rgba(255,255,255,0.2);"/>
+
+            <!-- Boutons de navigation -->
+            <Button text="📅  Événements" styleClass="sidebar-btn"
+                    fx:id="btnEvenements" onAction="#showEvenements"/>
+            <Button text="🎭  Séances" styleClass="sidebar-btn"
+                    fx:id="btnSeances" onAction="#showSeances"/>
+            <Button text="🏛️  Salles" styleClass="sidebar-btn"
+                    fx:id="btnSalles" onAction="#showSalles"/>
+            <Button text="👤  Clients" styleClass="sidebar-btn"
+                    fx:id="btnClients" onAction="#showClients"/>
+            <Button text="🎫  Billets" styleClass="sidebar-btn"
+                    fx:id="btnBillets" onAction="#showBillets"/>
+
+            <!-- Spacer pour pousser déconnexion en bas -->
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Separator style="-fx-background-color: rgba(255,255,255,0.2);"/>
+            <Button text="🚪  Déconnexion" styleClass="sidebar-btn"
+                    onAction="#handleDeconnexion"
+                    style="-fx-text-fill: rgba(255,100,100,0.9);"/>
+
+        </VBox>
+    </left>
+
+    <!-- CONTENU PRINCIPAL -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area">
+            <!-- Le contenu changera selon la section sélectionnée -->
+            <VBox alignment="CENTER" spacing="15">
+                <Label text="👋 Bienvenue dans le back-office"
+                       style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #5c6bc0;"/>
+                <Label text="Sélectionnez une section dans le menu à gauche"
+                       style="-fx-font-size: 14px; -fx-text-fill: #888888;"/>
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>
