@@ -164,57 +164,64 @@ Controllers  ──►  DAO (accès BDD)  ──►  MySQL
 ## Structure du projet
 
 ```
-src/main/java/org/example/
-├── Main.java                          → Navigation centralisée (StackPane unique)
-├── database/
-│   └── DatabaseConnection.java        → Singleton, port MAMP 8889
-├── model/
-│   ├── Evenement.java
-│   ├── Seance.java
-│   ├── Client.java
-│   ├── Billet.java
-│   ├── Salle.java
-│   ├── ComplexeCulturel.java
-│   ├── Categorie.java
-│   ├── Administrateur.java
-│   ├── SeanceAffichage.java           → Modèle JOIN Événement + Salle
-│   └── BilletAffichage.java           → Modèle JOIN Client + Séance + Événement
-├── dao/
-│   ├── EvenementDAO.java
-│   ├── SeanceDAO.java
-│   ├── ClientDAO.java
-│   ├── BilletDAO.java
-│   ├── SalleDAO.java
-│   ├── ComplexeCulturelDAO.java
-│   ├── CategorieDAO.java
-│   └── AdministrateurDAO.java
-└── controller/
-    ├── SelectionController.java
-    ├── LoginController.java
-    ├── DashboardController.java
-    ├── EvenementController.java / EvenementFormController.java
-    ├── ClientController.java / ClientFormController.java
-    ├── SeanceController.java / SeanceFormController.java
-    ├── BilletController.java / BilletFormController.java / BilletModifFormController.java
-    ├── SalleController.java / SalleFormController.java
-    ├── ClientLoginController.java
-    ├── ClientInscriptionController.java
-    ├── ClientDashboardController.java
-    ├── ClientEvenementsController.java
-    ├── ClientEvenementDetailController.java
-    ├── ClientMesBilletsController.java
-    └── ClientMonCompteController.java
-
-src/main/resources/
-└── org/example/
-    └── *.fxml                         → Vues FXML (Scene Builder)
-
-src/test/java/org/example/
-├── ValidationTest.java
-├── BilletTest.java
-├── EvenementDAOTest.java
-├── ClientDAOTest.java
-└── BilletDAOTest.java
+├── config.properties.example   → Modèle de configuration à copier en config.properties
+├── docker-compose.yml          → Lancement MySQL + phpMyAdmin via Docker
+├── pom.xml                     → Dépendances Maven (JavaFX, MySQL, bcrypt, JUnit)
+├── sql/
+│   └── init.sql                → Script SQL d'initialisation de la base de données
+├── src/
+│   ├── main/
+│   │   ├── java/org/example/
+│   │   │   ├── Main.java                          → Point d'entrée, navigation centralisée (StackPane)
+│   │   │   ├── database/
+│   │   │   │   └── DatabaseConnection.java        → Singleton de connexion MySQL via config.properties
+│   │   │   ├── model/
+│   │   │   │   ├── Evenement.java
+│   │   │   │   ├── Seance.java
+│   │   │   │   ├── Salle.java
+│   │   │   │   ├── ComplexeCulturel.java
+│   │   │   │   ├── Categorie.java
+│   │   │   │   ├── Billet.java
+│   │   │   │   ├── Client.java
+│   │   │   │   ├── Administrateur.java
+│   │   │   │   ├── SeanceAffichage.java           → Modèle JOIN Séance + Événement + Salle
+│   │   │   │   └── BilletAffichage.java           → Modèle JOIN Billet + Client + Séance + Événement
+│   │   │   ├── dao/
+│   │   │   │   ├── EvenementDAO.java
+│   │   │   │   ├── SeanceDAO.java
+│   │   │   │   ├── SalleDAO.java
+│   │   │   │   ├── ComplexeCulturelDAO.java
+│   │   │   │   ├── CategorieDAO.java
+│   │   │   │   ├── BilletDAO.java
+│   │   │   │   ├── ClientDAO.java
+│   │   │   │   └── AdministrateurDAO.java
+│   │   │   └── controller/
+│   │   │       ├── SelectionController.java       → Écran de sélection Admin / Client
+│   │   │       ├── LoginController.java           → Connexion administrateur
+│   │   │       ├── DashboardController.java       → Tableau de bord admin
+│   │   │       ├── EvenementController.java / EvenementFormController.java
+│   │   │       ├── SeanceController.java / SeanceFormController.java
+│   │   │       ├── SalleController.java / SalleFormController.java
+│   │   │       ├── BilletController.java / BilletFormController.java / BilletModifFormController.java
+│   │   │       ├── ClientController.java / ClientFormController.java
+│   │   │       ├── ClientLoginController.java     → Connexion client
+│   │   │       ├── ClientInscriptionController.java
+│   │   │       ├── ClientDashboardController.java
+│   │   │       ├── ClientEvenementsController.java / ClientEvenementDetailController.java
+│   │   │       ├── ClientMesBilletsController.java
+│   │   │       └── ClientMonCompteController.java
+│   │   └── resources/
+│   │       ├── css/
+│   │       │   └── style.css                      → Feuille de style globale
+│   │       ├── fxml/                              → Vues JavaFX (une par écran)
+│   │       └── images/                            → Images et affiches
+│   └── test/java/org/example/
+│       ├── BilletTest.java                        → Tests unitaires modèle Billet
+│       ├── BilletDAOTest.java                     → Tests DAO Billet
+│       ├── ClientDAOTest.java                     → Tests DAO Client
+│       ├── EvenementDAOTest.java                  → Tests DAO Événement
+│       ├── ValidationTest.java                    → Tests de validation des données
+│       └── GenererHash.java                       → Utilitaire génération hash bcrypt
 ```
 ---
 ## 🐳 Lancer la base de données avec Docker
