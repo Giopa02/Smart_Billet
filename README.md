@@ -216,6 +216,52 @@ src/test/java/org/example/
 ├── ClientDAOTest.java
 └── BilletDAOTest.java
 ```
+---
+## 🐳 Lancer la base de données avec Docker
+
+### Prérequis
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installé et lancé
+
+### Installation
+
+1. Cloner le projet
+```bash
+   git clone https://github.com/Giopa02/Smart_Billet
+   cd Smart_Billet
+```
+
+2. Copier le fichier de configuration et remplir les valeurs
+```bash
+   cp config.properties.example config.properties
+```
+
+3. Lancer la base de données
+```bash
+   docker compose up -d
+```
+
+4. Vérifier que tout tourne
+```bash
+   docker ps
+```
+
+### Accès
+
+| Service | URL | Identifiants |
+|---|---|---|
+| phpMyAdmin | http://localhost:8081 | root / root |
+| MySQL | localhost:3307 | smartbillet_user / smartbillet_pass |
+
+### Arrêter les containers
+```bash
+docker compose down
+```
+
+### Réinitialiser la base de données
+```bash
+docker compose down -v
+docker compose up -d
+```
 
 ---
 
