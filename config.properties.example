@@ -1,0 +1,4 @@
+# Copier ce fichier en config.properties et remplir les valeurs
+db.url=jdbc:mysql://localhost:3307/smart_billet_v2
+db.user=
+db.password=

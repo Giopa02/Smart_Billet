@@ -1,24 +1,29 @@
 package org.example.database;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DatabaseConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:8889/smart_billet_v2";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
-
     private static Connection connection = null;
 
-    public static Connection getConnection() {
-        if (connection == null) {
+    public static Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
             try {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("Connexion à la base de données réussie !");
-            } catch (SQLException e) {
-                System.err.println("Erreur de connexion : " + e.getMessage());
+                Properties props = new Properties();
+                props.load(new FileInputStream("config.properties"));
+
+                String url = props.getProperty("db.url");
+                String user = props.getProperty("db.user");
+                String password = props.getProperty("db.password");
+
+                connection = DriverManager.getConnection(url, user, password);
+            } catch (IOException e) {
+                throw new SQLException("Impossible de lire config.properties : " + e.getMessage());
             }
         }
         return connection;

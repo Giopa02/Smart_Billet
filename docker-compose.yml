@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: mysql:8.0
+    container_name: smartbillet-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: smartbillet
+      MYSQL_USER: smartbillet_user
+      MYSQL_PASSWORD: smartbillet_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - smartbillet-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: smartbillet-phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: smart_billet_v2
+      MYSQL_USER: smartbillet_user
+      MYSQL_PASSWORD: smartbillet_pass
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - smartbillet-network
+
+volumes:
+  db_data:
+
+networks:
+  smartbillet-network:
+    driver: bridge
