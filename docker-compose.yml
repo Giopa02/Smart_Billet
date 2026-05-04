@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   db:
@@ -8,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: smartbillet
+      MYSQL_DATABASE: smart_billet_v2
       MYSQL_USER: smartbillet_user
       MYSQL_PASSWORD: smartbillet_pass
     ports:
@@ -31,10 +29,7 @@ services:
     ports:
       - "8081:80"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: smart_billet_v2
-      MYSQL_USER: smartbillet_user
-      MYSQL_PASSWORD: smartbillet_pass
+      PMA_HOST: db
     depends_on:
       db:
         condition: service_healthy
