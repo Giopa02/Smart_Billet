@@ -64,11 +64,12 @@ L'application se décompose en deux espaces distincts :
 | **JavaFX 21.0.9** | Framework UI — composants, FXML, CSS |
 | **Scene Builder** | Conception des fichiers FXML |
 | **Maven** | Gestionnaire de dépendances et build |
-| **MySQL** (via MAMP, port 8889) | Base de données relationnelle |
+| **MySQL 8.0** | Base de données relationnelle |
 | **JDBC** (mysql-connector-java 8.0.33) | Connexion Java → MySQL |
 | **bcrypt** (at.favre.lib 0.10.2) | Hashage sécurisé des mots de passe (coût 12) |
 | **JUnit 5** | Tests unitaires (57 tests) |
 | **Mockito** | Mocking des DAO dans les tests |
+| **Docker** | Conteneurisation MySQL + phpMyAdmin |
 | **IntelliJ IDEA** | IDE de développement |
 | **Git / GitHub** | Versionnement du projet |
 | **phpMyAdmin** | Administration de la base de données |
@@ -82,39 +83,37 @@ L'application se décompose en deux espaces distincts :
 - **Java JDK 21** — [Télécharger](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
 - **JavaFX SDK 21** — [Télécharger](https://gluonhq.com/products/javafx/)
 - **Maven** — [Télécharger](https://maven.apache.org/download.cgi)
-- **MAMP** (ou tout autre serveur MySQL local) avec MySQL sur le **port 8889**
-- **IntelliJ IDEA** (Community ou Ultimate) recommandé
+- **Docker Desktop** — [Télécharger](https://www.docker.com/products/docker-desktop/)
 
 ### Installation
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/<votre-username>/SmartBillet.git
-   cd SmartBillet
+   git clone https://github.com/Giopa02/Smart_Billet
+   cd Smart_Billet
    ```
 
-2. **Importer la base de données**
-   - Démarrer MAMP et ouvrir phpMyAdmin (`http://localhost:8888/phpMyAdmin`)
-   - Créer une base de données nommée `smart_billet_v2`
-   - Importer le fichier SQL fourni (`smart_billet_v2.sql`)
-
-3. **Configurer la connexion BDD**  
-   Vérifier les paramètres dans `src/main/java/org/example/database/DatabaseConnection.java` :
-   ```java
-   private static final String URL = "jdbc:mysql://localhost:8889/smart_billet_v2";
-   private static final String USER = "root";
-   private static final String PASSWORD = "root";
-   ```
-
-4. **Configurer les VM Options JavaFX**  
-   Dans IntelliJ, aller dans **Run > Edit Configurations** et ajouter :
-   ```
-   --module-path /chemin/vers/javafx-sdk-21/lib --add-modules javafx.controls,javafx.fxml
-   ```
-
-5. **Lancer l'application**
+2. **Configurer la connexion BDD**
    ```bash
-   mvn clean javafx:run
+   cp config.properties.example config.properties
+   ```
+   Remplir les valeurs dans `config.properties` :
+   ```properties
+   db.url=jdbc:mysql://localhost:3307/smart_billet_v2
+   db.user=smartbillet_user
+   db.password=smartbillet_pass
+   ```
+
+3. **Lancer la base de données via Docker**
+   ```bash
+   docker compose up -d
+   ```
+
+4. **Lancer l'application**
+   ```bash
+   java --module-path /chemin/vers/javafx-sdk-21/lib \
+        --add-modules javafx.controls,javafx.fxml \
+        -jar deploiement/SmartBillet.jar
    ```
 
 ### Compte administrateur par défaut
@@ -126,6 +125,80 @@ L'application se décompose en deux espaces distincts :
 
 ---
 
+## 🐳 Lancer la base de données avec Docker
+
+### Prérequis
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installé et lancé
+
+### Installation
+
+1. Cloner le projet
+   ```bash
+   git clone https://github.com/Giopa02/Smart_Billet
+   cd Smart_Billet
+   ```
+
+2. Copier le fichier de configuration et remplir les valeurs
+   ```bash
+   cp config.properties.example config.properties
+   ```
+
+3. Lancer la base de données
+   ```bash
+   docker compose up -d
+   ```
+
+4. Vérifier que tout tourne
+   ```bash
+   docker ps
+   ```
+
+### Accès
+
+| Service | URL | Identifiants |
+|---|---|---|
+| phpMyAdmin | http://localhost:8081 | voir `config.properties` |
+| MySQL | localhost:3307 | voir `config.properties` |
+
+### Arrêter les containers
+```bash
+docker compose down
+```
+
+### Réinitialiser la base de données
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+---
+
+## 🚀 Lancer le .jar
+
+Le fichier `.jar` exécutable est disponible dans le dossier `deploiement/`.
+
+### Prérequis
+- **Java JDK 21** installé
+- **JavaFX SDK 21** installé
+- **Docker Desktop** lancé avec les containers actifs (`docker compose up -d`)
+
+### Commande de lancement
+```bash
+java --module-path /chemin/vers/javafx-sdk-21/lib \
+     --add-modules javafx.controls,javafx.fxml \
+     -jar deploiement/SmartBillet.jar
+```
+
+> ⚠️ Remplace `/chemin/vers/javafx-sdk-21/lib` par le chemin vers ton installation JavaFX.
+
+### Regénérer le .jar après modifications
+```bash
+mvn clean package -DskipTests
+cp target/SmartBillet-1.0-SNAPSHOT.jar deploiement/SmartBillet.jar
+```
+
+---
+
 ## Architecture du projet
 
 L'application suit une architecture **MVC / DAO** stricte :
@@ -134,10 +207,11 @@ L'application suit une architecture **MVC / DAO** stricte :
 Vues (FXML)
     │
     ▼
-Controllers  ──►  DAO (accès BDD)  ──►  MySQL
+Controllers  ──►  DAO (accès BDD)  ──►  MySQL (Docker)
     │                   │
     ▼                   ▼
   Models           DatabaseConnection (Singleton)
+                   (lit config.properties)
 ```
 
 - **Model** : classes POJO représentant les entités (`Evenement`, `Client`, `Billet`, etc.)
@@ -164,11 +238,11 @@ Controllers  ──►  DAO (accès BDD)  ──►  MySQL
 ## Structure du projet
 
 ```
-├── config.properties.example   → Modèle de configuration à copier en config.properties
-├── docker-compose.yml          → Lancement MySQL + phpMyAdmin via Docker
-├── pom.xml                     → Dépendances Maven (JavaFX, MySQL, bcrypt, JUnit)
+SmartBillet/
+├── deploiement/
+│   └── SmartBillet.jar              → Exécutable de l'application
 ├── sql/
-│   └── init.sql                → Script SQL d'initialisation de la base de données
+│   └── init.sql                     → Script SQL d'initialisation (structure + données)
 ├── src/
 │   ├── main/
 │   │   ├── java/org/example/
@@ -222,52 +296,10 @@ Controllers  ──►  DAO (accès BDD)  ──►  MySQL
 │       ├── EvenementDAOTest.java                  → Tests DAO Événement
 │       ├── ValidationTest.java                    → Tests de validation des données
 │       └── GenererHash.java                       → Utilitaire génération hash bcrypt
-```
----
-## 🐳 Lancer la base de données avec Docker
-
-### Prérequis
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installé et lancé
-
-### Installation
-
-1. Cloner le projet
-```bash
-   git clone https://github.com/Giopa02/Smart_Billet
-   cd Smart_Billet
-```
-
-2. Copier le fichier de configuration et remplir les valeurs
-```bash
-   cp config.properties.example config.properties
-```
-
-3. Lancer la base de données
-```bash
-   docker compose up -d
-```
-
-4. Vérifier que tout tourne
-```bash
-   docker ps
-```
-
-### Accès
-
-| Service | URL | Identifiants |
-|---|---|---|
-| phpMyAdmin | http://localhost:8081 | root / root |
-| MySQL | localhost:3307 | smartbillet_user / smartbillet_pass |
-
-### Arrêter les containers
-```bash
-docker compose down
-```
-
-### Réinitialiser la base de données
-```bash
-docker compose down -v
-docker compose up -d
+├── config.properties.example         → Modèle de configuration à copier en config.properties
+├── docker-compose.yml                 → Lancement MySQL + phpMyAdmin via Docker
+├── pom.xml                            → Dépendances Maven (JavaFX, MySQL, bcrypt, JUnit)
+└── README.md
 ```
 
 ---
@@ -301,13 +333,15 @@ mvn test
 | **Dates affichées avec `T`** — format ISO par défaut de `LocalDateTime` | `setCellFactory` avec `DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")` sur toutes les colonnes. |
 | **Popups ouvertes dans une fenêtre séparée** en plein écran | `alert.initOwner(Main.getStage())` ajouté systématiquement sur toutes les alertes et popups. |
 | **`ClassCastException` dans l'autocomplétion `ComboBox`** — JavaFX caste `String` → `Client` lors de la sélection | Vérification `if (combo.getValue() instanceof Client) return;` + `setOnKeyPressed` pour réinitialiser. |
-| **`getScene()` null** dans les `FormControllers` — le tableau n'est plus visible quand le formulaire est affiché | Lookup via un champ visible du formulaire (`titreLabel.getScene().lookup("#contentArea")`). |
+| **`getScene()` null** dans les `FormControllers` | Lookup via un champ visible du formulaire (`titreLabel.getScene().lookup("#contentArea")`). |
 | **`Location is not set`** — `getClass().getResource()` ne fonctionne pas dans une méthode statique | Remplacé par `Main.class.getResource(fxmlPath)` dans `naviguerVers()`. |
 | **Hash bcrypt de 59 caractères** au lieu de 60 lors du copier-coller dans phpMyAdmin | Généré via `GenererHash.java` dans IntelliJ, sélection complète avec `Ctrl+A` dans la console. |
 | **Anciens comptes clients incompatibles** avec bcrypt (mots de passe en clair) | Requête SQL ciblée : `DELETE FROM Client WHERE mot_de_passe NOT LIKE '$2a$%'`. |
-| **`Client` connecté `null`** lors de l'achat de billet — `initialize()` appelé avant `setClient()` | Déplacé l'appel `afficherCards()` dans `setClient()` pour s'assurer que le client est défini avant la création des cards. |
-| **Doublon numéro billet** `TNG-YYYY-XXXXX` — `COUNT` basé sur le nombre de billets, pas le max | Remplacé par `MAX(id_billet) + 1` via `BilletDAO.getMaxId()` pour garantir l'unicité même après suppressions. |
+| **`Client` connecté `null`** lors de l'achat de billet | Déplacé l'appel `afficherCards()` dans `setClient()` pour s'assurer que le client est défini avant la création des cards. |
+| **Doublon numéro billet** `TNG-YYYY-XXXXX` | Remplacé par `MAX(id_billet) + 1` via `BilletDAO.getMaxId()` pour garantir l'unicité même après suppressions. |
 | **Colonne `places restantes`** dans `SeanceView` — erreur FXML ligne 45 | Colonne déclarée dans le FXML mais non liée dans le controller. Retirée du FXML et du controller. |
+| **Connexion BDD hardcodée** — URL/user/password directement dans le code | Migration vers `config.properties` lu dynamiquement — permet de changer l'environnement (local/Docker) sans recompiler. |
+| **Port 3306 déjà utilisé** par MAMP lors du lancement Docker | Changement du port Docker vers `3307:3306` dans `docker-compose.yml`. |
 
 ---
 
@@ -323,4 +357,4 @@ mvn test
 ---
 
 *SmartBillet — BTS SIO SLAM — Mars 2026*  
-*Application JavaFX de billetterie — Architecture MVC/DAO — Java 21 + MySQL*
+*Application JavaFX de billetterie — Architecture MVC/DAO — Java 21 + MySQL + Docker*
